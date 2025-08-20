@@ -7,9 +7,12 @@ use App\Http\Controllers\{
     AmenityController,
     BookingController,
     ConciergeRequestController,
-    InvoiceController
+    InvoiceController,
+    AuthController
 };
+use App\Http\Controllers\Auth\RegisteredUserController;
 
+//Route::post('/register', [RegisteredUserController::class, 'store']);
 // Guests
 Route::apiResource('guests', GuestController::class);
 
@@ -27,3 +30,7 @@ Route::apiResource('concierge-requests', ConciergeRequestController::class);
 
 // Invoices
 Route::apiResource('invoices', InvoiceController::class);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::middleware('auth:sanctum')->get('/me', [AuthController::class, 'me']);
